@@ -219,6 +219,7 @@ class Gantt extends Construct {
         }
         if (this.config.showActionLegend) {
             this.legendSVG = createLegend(
+                this.config,
                 this.config.bindLegendTo
                     ? d3.select(this.config.bindLegendTo)
                     : containerSVG

@@ -55,6 +55,47 @@ const getPadding = (config, inputPadding) => {
         };
     }
 };
+
+/**
+ * Helper function to set the right legend padding values based on input JSON.
+ *
+ * @private
+ * @param {object} config - config which needs to be updated
+ * @param {object} inputLegendPadding - input legend padding provided via input JSON.
+ * @returns {object} - padding for Legend
+ */
+const getLegendPadding = (config, inputLegendPadding) => {
+    if (utils.isDefined(config.legendPadding)) {
+        return {
+            top: getDefaultValue(
+                inputLegendPadding.top,
+                constants.LEGEND_PADDING.top
+            ),
+            bottom: getDefaultValue(
+                inputLegendPadding.bottom,
+                constants.LEGEND_PADDING.bottom
+            ),
+            right: getDefaultValue(
+                inputLegendPadding.right,
+                constants.LEGEND_PADDING.right
+            ),
+            left: getDefaultValue(
+                inputLegendPadding.left,
+                constants.LEGEND_PADDING.left
+            ),
+            hasCustomLegendPadding: true
+        };
+    } else {
+        return {
+            top: constants.LEGEND_PADDING.top,
+            bottom: constants.LEGEND_PADDING.bottom,
+            right: constants.LEGEND_PADDING.right,
+            left: constants.LEGEND_PADDING.left,
+            hasCustomLegendPadding: false
+        };
+    }
+};
+
 /**
  * Processes the input from the JSON and updates the config object.
  * d3 domain and ranges are stored based on the upper and lower x, y and y2 limits.
@@ -110,7 +151,7 @@ export const processInput = (input, config, type) => {
         input.removeContainerPadding,
         false
     );
-    config.legendPadding = input.legendPadding;
+    config.legendPadding = getLegendPadding(config, input.legendPadding);
 
     // Additional X Axis properties defined on top of input axis
     config.axis.x.type = getDefaultValue(_axis.x.type, AXIS_TYPE.DEFAULT);

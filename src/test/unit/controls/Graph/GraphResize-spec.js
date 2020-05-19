@@ -1,6 +1,7 @@
 "use strict";
 import * as d3 from "d3";
 import Graph from "../../../../main/js/controls/Graph/index";
+import Line from "../../../../main/js/controls/Line/Line";
 import { getXAxisWidth } from "../../../../main/js/helpers/axis";
 import constants from "../../../../main/js/helpers/constants";
 import styles from "../../../../main/js/helpers/styles";
@@ -10,7 +11,13 @@ import {
     toNumber,
     triggerEvent
 } from "../../helpers/commonHelpers";
-import { axisDefault, fetchElementByClass, getAxes } from "./helpers";
+import {
+    axisDefault,
+    fetchElementByClass,
+    getAxes,
+    getData,
+    valuesDefault
+} from "./helpers";
 
 describe("Graph - Resize", () => {
     let graph = null;
@@ -203,7 +210,7 @@ describe("Graph - Resize", () => {
             graph = new Graph(axisData);
             const expectedOutput = {
                 top: 10,
-                bottom: 5,
+                bottom: 10,
                 left: 30,
                 right: 50,
                 hasCustomPadding: false
@@ -219,7 +226,7 @@ describe("Graph - Resize", () => {
             graph = new Graph(axisData);
             const expectedOutput = {
                 top: 40,
-                bottom: 5,
+                bottom: 10,
                 left: 30,
                 right: 50,
                 hasCustomPadding: true
@@ -378,6 +385,46 @@ describe("Graph - Resize", () => {
                 );
                 done();
             });
+        });
+    });
+    describe("When removeContainerPadding is set to true", () => {
+        it("Removes carbon graph container padding", () => {
+            graph.destroy();
+            graph = new Graph(
+                Object.assign(
+                    {
+                        removeContainerPadding: true
+                    },
+                    getAxes(axisDefault)
+                )
+            );
+            const contentContainer = fetchElementByClass(styles.container);
+            expect(contentContainer.getAttribute("style")).toBe(
+                "padding-top: 0px; padding-bottom: 0px;"
+            );
+        });
+    });
+    describe("When legendPadding is provided", () => {
+        it("Sets the legend padding and removes legend margin of 8px", () => {
+            graph.destroy();
+            graph = new Graph(
+                Object.assign(
+                    {
+                        legendPadding: {
+                            left: 2.5,
+                            right: 2.5,
+                            top: 2.5,
+                            bottom: 2.5
+                        }
+                    },
+                    getAxes(axisDefault)
+                )
+            );
+            graph.loadContent(new Line(getData(valuesDefault)));
+            const legendElement = fetchElementByClass(styles.legendItem);
+            expect(legendElement.getAttribute("style")).toBe(
+                "margin: 0px; padding: 2.5px;"
+            );
         });
     });
 });

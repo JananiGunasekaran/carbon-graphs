@@ -215,6 +215,7 @@ class Timeline extends Construct {
         createLabel(this.config, this.svg);
         if (this.config.showLegend) {
             this.legendSVG = createLegend(
+                this.config,
                 this.config.bindLegendTo
                     ? d3.select(this.config.bindLegendTo)
                     : containerSVG

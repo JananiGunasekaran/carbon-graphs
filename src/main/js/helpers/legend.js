@@ -52,13 +52,12 @@ const getText = (text) => utils.sanitize(text);
  * @private
  * @param {object} legendSVG - d3 element path of the legend from the parent control
  * @param {object} t - input item object processed from the input JSON
- * @param {object} shownTargets - Currently shown targets in the graph, once the legend item is
- * clicked the item corresponding to the legend in the graph will be removed.
+ * @param {object} config - Graph config object derived from input JSON
  * @param {object} eventHandlers - Callback function object executed when legend item is clicked or hovered.
  * Contains click and hover handlers as object property
  * @returns {object} returns the d3 element path for the legend
  */
-const loadLegendItem = (legendSVG, t, shownTargets, eventHandlers) => {
+const loadLegendItem = (legendSVG, t, config, eventHandlers) => {
     if (!utils.isFunction(eventHandlers.clickHandler)) {
         throw new Error(
             "Invalid Argument: eventHandlers needs a clickHandler callback function."
@@ -71,7 +70,7 @@ const loadLegendItem = (legendSVG, t, shownTargets, eventHandlers) => {
     }
     validateLegendLabel(t.label);
     const text = getText(t.label.display);
-    const index = shownTargets.indexOf(t.key);
+    const index = config.shownTargets.indexOf(t.key);
     const shouldForceDisableLegendItem =
         !!t.label.isDisabled || utils.isEmptyArray(t.values);
     const itemPath = legendSVG
@@ -81,7 +80,12 @@ const loadLegendItem = (legendSVG, t, shownTargets, eventHandlers) => {
         .attr("aria-disabled", shouldForceDisableLegendItem)
         .attr("role", "listitem")
         .attr("aria-labelledby", text)
-        .attr("aria-describedby", t.key);
+        .attr("aria-describedby", t.key)
+        .style("margin", config.legendPadding.hasCustomLegendPadding && 0)
+        .style(
+            "padding",
+            `${config.legendPadding.top}px ${config.legendPadding.right}px ${config.legendPadding.bottom}px ${config.legendPadding.left}px`
+        );
     if (!shouldForceDisableLegendItem && index > -1) {
         itemPath
             .on("click", function () {
@@ -205,11 +209,16 @@ const removeLegendItem = (legendSVG, dataTarget) =>
  * Only if showLegend is enabled.
  *
  * @private
+ * @param {object} config - Graph config object derived from input JSON
  * @param {object} container - d3 Container svg
  * @returns {object} - d3 svg object
  */
-const createLegend = (container) =>
-    container.append("ul").classed(styles.legend, true).attr("role", "list");
+const createLegend = (config, container) =>
+    container
+        .append("ul")
+        .classed(styles.legend, true)
+        .attr("role", "list")
+        .style("flex-direction", config.bindLegendTo && "column");
 /**
  * Returns a boolean after checking the attribute `aria-current`.
  *

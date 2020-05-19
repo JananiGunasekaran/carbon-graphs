@@ -202,17 +202,18 @@ ganttInstance.loadContent(dataArray);
 
 #### Optional
 
-| Property Name    | Expected | Default                                        | Description                                                                          |
-| ---------------- | -------- | ---------------------------------------------- | ------------------------------------------------------------------------------------ |
-| bindLegendTo     | string   | null                                           | If DOM id provided, binds legend into that container (Example: `"#legendContainer"`) |
-| locale           | object   | LOCALE.en_US                                   | Locale object for X-Axis tick values                                                 |
-| throttle         | number   | (1000/60) => time in ms                        | Delay between resize of a browser window                                             |
-| dateline         | array    | []                                             | Refer [Dateline](../helpers/Dateline.md)                                             |
-| actionLegend     | array    | []                                             | Refer [Action Legend](#action-legend)                                                |
-| showActionLegend | boolean  | true                                           | Toggle to show graph legend                                                          |
-| padding          | object   | `{ top: 10, bottom: 5, left: 100, right: 50 }` | Refer [Padding](Padding.md)                                                          |
-| clickPassThrough | object   | null                                           | Refer [Pass Through](#Pass-Through)                                                  |
-| pan              | object   | {}                                             | Refer [Panning](./Panning.md)                                                        |
+| Property Name    | Expected | Default                                         | Description                                                                          |
+| ---------------- | -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------ |
+| bindLegendTo     | string   | null                                            | If DOM id provided, binds legend into that container (Example: `"#legendContainer"`) |
+| locale           | object   | LOCALE.en_US                                    | Locale object for X-Axis tick values                                                 |
+| throttle         | number   | (1000/60) => time in ms                         | Delay between resize of a browser window                                             |
+| dateline         | array    | []                                              | Refer [Dateline](../helpers/Dateline.md)                                             |
+| actionLegend     | array    | []                                              | Refer [Action Legend](#action-legend)                                                |
+| showActionLegend | boolean  | true                                            | Toggle to show graph legend                                                          |
+| padding          | object   | `{ top: 10, bottom: 10, left: 100, right: 50 }` | Refer [Padding](Padding.md)                                                          |
+| clickPassThrough | object   | null                                            | Refer [Pass Through](#Pass-Through)                                                  |
+| pan              | object   | {}                                              | Refer [Panning](./Panning.md)                                                        |
+| legendPadding    | object   | `{ top: 4, bottom: 4, left: 8, right: 8 }`      | Sets the legend padding and removes the carbon default margin of 8px around legend   |
 
 ### Axis
 

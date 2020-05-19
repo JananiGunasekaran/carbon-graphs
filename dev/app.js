@@ -85,7 +85,8 @@ import {
     renderDashedLine,
     renderLineWithLegendOptions,
     renderLineWithShapesShownPerDataSet,
-    renderDisableCalibration
+    renderDisableCalibration,
+    renderGraphAndLegendPaddingReduced
 } from "./examples/controls/line";
 import {
     renderMultiPairedResultRegion,
@@ -226,6 +227,14 @@ renderSiteApp(
                     pathname: "/line/disable-calibration",
                     content: renderDisableCalibration,
                     title: "Disable Calibration"
+                },
+                {
+                    pathname: "/line/graph-and-legend-padding-reduced",
+                    content: (id) => {
+                        createElementLegendBindTo(id);
+                        return renderGraphAndLegendPaddingReduced(id);
+                    },
+                    title: "Graph and Legend Padding Reduced"
                 }
             ]
         },
