@@ -106,6 +106,11 @@ export const processInput = (input, config, type) => {
     config.showVGrid = getDefaultValue(input.showVGrid, true);
     config.dimension = getDefaultValue(input.dimension, {});
     config.allowCalibration = getDefaultValue(input.allowCalibration, true);
+    config.removeContainerPadding = getDefaultValue(
+        input.removeContainerPadding,
+        false
+    );
+    config.legendPadding = input.legendPadding;
 
     // Additional X Axis properties defined on top of input axis
     config.axis.x.type = getDefaultValue(_axis.x.type, AXIS_TYPE.DEFAULT);
