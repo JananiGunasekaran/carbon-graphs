@@ -65,6 +65,7 @@ const getPadding = (config, inputPadding) => {
  * @returns {object} - padding for Legend
  */
 const getLegendPadding = (config, inputLegendPadding) => {
+    // If legendPadding is provided, update the config object with the provided values, else update it with the default constants
     if (utils.isDefined(config.legendPadding)) {
         return {
             top: getDefaultValue(
