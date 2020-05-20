@@ -427,4 +427,53 @@ describe("Graph - Resize", () => {
             );
         });
     });
+    describe("When removeContainerPadding is set to true and legendPadding is provided", () => {
+        it("Removes carbon graph container padding and sets the legend padding and removes legend margin of 8px", () => {
+            graph.destroy();
+            graph = new Graph(
+                Object.assign(
+                    {
+                        removeContainerPadding: true,
+                        legendPadding: {
+                            left: 5,
+                            right: 5,
+                            top: 4,
+                            bottom: 2.5
+                        }
+                    },
+                    getAxes(axisDefault)
+                )
+            );
+            graph.loadContent(new Line(getData(valuesDefault)));
+            const contentContainer = fetchElementByClass(styles.container);
+            const legendElement = fetchElementByClass(styles.legendItem);
+            expect(contentContainer.getAttribute("style")).toBe(
+                "padding-top: 0px; padding-bottom: 0px;"
+            );
+            expect(legendElement.getAttribute("style")).toBe(
+                "margin: 0px; padding: 4px 5px 2.5px;"
+            );
+        });
+    });
+    describe("When removeContainerPadding is set to false and legendPadding is not provided", () => {
+        it("Default Carbon graph container padding is applied and default legend padding is applied", () => {
+            graph.destroy();
+            graph = new Graph(
+                Object.assign(
+                    {
+                        removeContainerPadding: false
+                    },
+                    getAxes(axisDefault)
+                )
+            );
+            graph.loadContent(new Line(getData(valuesDefault)));
+            const contentContainer = fetchElementByClass(styles.container);
+            const legendElement = fetchElementByClass(styles.legendItem);
+            // Default Carbon graph container padding is applied. Hence no new style attribute will be present to reset padding top and bottom to 0.
+            expect(contentContainer.getAttribute("style")).toBeNull();
+            expect(legendElement.getAttribute("style")).toBe(
+                "padding: 4px 8px;"
+            );
+        });
+    });
 });
