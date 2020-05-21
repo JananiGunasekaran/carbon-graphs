@@ -98,9 +98,6 @@ export const processInput = (input, config) => {
     config.padding = getPadding(config, input.padding);
     config.padding.hasCustomPadding = utils.isDefined(input.padding);
     config.legendPadding = getLegendPadding(config, input.legendPadding);
-    config.legendPadding.hasCustomLegendPadding = utils.isDefined(
-        input.legendPadding
-    );
     config.axis = {
         x: {}
     };
