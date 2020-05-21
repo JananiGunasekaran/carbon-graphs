@@ -334,9 +334,10 @@ const getPieLegendText = (display, value, format) => {
  * @param {object} legendSVG - d3 element path of the legend from the parent control
  * @param {object} dataTarget - input item object processed from the input JSON
  * @param {Function} hoverHandler - Callback function to be called when hovered over the legend item
+ * @param {object} config - Graph config object derived from input JSON
  * @returns {undefined} returns nothing
  */
-const loadPieLegendItem = (legendSVG, dataTarget, { hoverHandler }) => {
+const loadPieLegendItem = (legendSVG, dataTarget, { hoverHandler }, config) => {
     validateLegendLabel(dataTarget.label);
     const text = getPieLegendText(
         dataTarget.label.display,
@@ -349,7 +350,12 @@ const loadPieLegendItem = (legendSVG, dataTarget, { hoverHandler }) => {
         .attr("role", "listitem")
         .attr("tabindex", 0)
         .attr("aria-labelledby", text)
-        .attr("aria-describedby", dataTarget.key);
+        .attr("aria-describedby", dataTarget.key)
+        .style("margin", config.legendPadding.hasCustomLegendPadding && 0)
+        .style(
+            "padding",
+            `${config.legendPadding.top}px ${config.legendPadding.right}px ${config.legendPadding.bottom}px ${config.legendPadding.left}px`
+        );
     itemPath.append(() =>
         new Shape(getShapeForTarget(dataTarget)).getShapeElement(
             getDefaultSVGProps({

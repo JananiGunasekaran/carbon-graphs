@@ -550,7 +550,7 @@ export const renderDisableCalibration = (id) => {
     );
     return lineDefault;
 };
-export const renderGraphAndLegendPaddingReduced = (id) => {
+export const renderLineGraphAndLegendPaddingReduced = (id) => {
     const containerElement = document.querySelector(`#${id}`);
     containerElement.setAttribute(
         "class",
