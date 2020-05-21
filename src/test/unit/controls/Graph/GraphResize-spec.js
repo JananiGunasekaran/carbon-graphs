@@ -476,4 +476,68 @@ describe("Graph - Resize", () => {
             );
         });
     });
+    describe("When x-axis show is set to true and showLabel is set to false", () => {
+        it("Sets canvas height correctly", () => {
+            graph.destroy();
+            const axisObj = utils.deepClone(axisDefault);
+            axisObj.x.show = true;
+            graph = new Graph(
+                Object.assign(
+                    {
+                        showLabel: false
+                    },
+                    getAxes(axisObj)
+                )
+            );
+            expect(graph.config.canvasHeight).toBe(270);
+        });
+    });
+    describe("When x-axis show is set to false and showLabel is set to true", () => {
+        it("Sets canvas height correctly", () => {
+            graph.destroy();
+            const axisObj = utils.deepClone(axisDefault);
+            axisObj.x.show = false;
+            graph = new Graph(
+                Object.assign(
+                    {
+                        showLabel: true
+                    },
+                    getAxes(axisObj)
+                )
+            );
+            expect(graph.config.canvasHeight).toBeCloserTo(306);
+        });
+    });
+    describe("When  both x-axis show and showLabel properties are set to true", () => {
+        it("Sets canvas height correctly", () => {
+            graph.destroy();
+            const axisObj = utils.deepClone(axisDefault);
+            axisObj.x.show = true;
+            graph = new Graph(
+                Object.assign(
+                    {
+                        showLabel: true
+                    },
+                    getAxes(axisObj)
+                )
+            );
+            expect(graph.config.canvasHeight).toBeCloserTo(306);
+        });
+    });
+    describe("When  both x-axis show and showLabel properties are set to false", () => {
+        it("Reduces the extra pixels added to canvas height", () => {
+            graph.destroy();
+            const axisObj = utils.deepClone(axisDefault);
+            axisObj.x.show = false;
+            graph = new Graph(
+                Object.assign(
+                    {
+                        showLabel: false
+                    },
+                    getAxes(axisObj)
+                )
+            );
+            expect(graph.config.canvasHeight).toBe(250);
+        });
+    });
 });
