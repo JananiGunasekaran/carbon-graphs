@@ -11,6 +11,7 @@ import errors from "../../helpers/errors";
 import { validateEventline } from "../../helpers/eventline";
 import utils from "../../helpers/utils";
 import { DEFAULT_LOCALE } from "../../locale/index";
+import { getLegendPadding } from "../../helpers/legend";
 
 /**
  * Validates the newly added task into the graph before rendering
@@ -164,46 +165,6 @@ const getPadding = (config, inputPadding) => {
             right: constants.PADDING.right,
             left: constants.PADDING.trackLabel,
             hasCustomPadding: false
-        };
-    }
-};
-/**
- * Helper function to set the right legend padding values based on input JSON.
- *
- * @private
- * @param {object} config - config which needs to be updated
- * @param {object} inputLegendPadding - input legend padding provided via input JSON.
- * @returns {object} - padding for Legend
- */
-const getLegendPadding = (config, inputLegendPadding) => {
-    // If legendPadding is provided, update the config object with the provided values, else update it with the default constants
-    if (utils.isDefined(config.legendPadding)) {
-        return {
-            top: getDefaultValue(
-                inputLegendPadding.top,
-                constants.LEGEND_PADDING.top
-            ),
-            bottom: getDefaultValue(
-                inputLegendPadding.bottom,
-                constants.LEGEND_PADDING.bottom
-            ),
-            right: getDefaultValue(
-                inputLegendPadding.right,
-                constants.LEGEND_PADDING.right
-            ),
-            left: getDefaultValue(
-                inputLegendPadding.left,
-                constants.LEGEND_PADDING.left
-            ),
-            hasCustomLegendPadding: true
-        };
-    } else {
-        return {
-            top: constants.LEGEND_PADDING.top,
-            bottom: constants.LEGEND_PADDING.bottom,
-            right: constants.LEGEND_PADDING.right,
-            left: constants.LEGEND_PADDING.left,
-            hasCustomLegendPadding: false
         };
     }
 };
