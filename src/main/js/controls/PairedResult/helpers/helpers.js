@@ -571,8 +571,15 @@ const clickHandler = (graphContext, control, config, canvasSVG) => (
     canvasSVG
         .selectAll(`.${styles.pairedPoint}[aria-describedby="${item.key}"]`)
         .attr("aria-hidden", legendSelected);
-    const boxPath = d3.selectAll(`.${styles.pairedBox}`);
-    showLine(config, boxPath);
+    const pairedBoxGroupClipPath = `url(#${config.clipPathId})`;
+    const pairedBoxGroup = d3.selectAll(`.${styles.pairedBoxGroup}`);
+    pairedBoxGroup.each(function () {
+        const clipPath = d3.select(this).attr("clip-path");
+        if (clipPath === pairedBoxGroupClipPath) {
+            const boxPath = d3.select(this).selectAll(`.${styles.pairedBox}`);
+            showLine(config, boxPath);
+        }
+    });
     window.requestAnimationFrame(
         onAnimationHandler(graphContext, config, canvasSVG, item)
     );
