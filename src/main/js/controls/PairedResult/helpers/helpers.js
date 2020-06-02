@@ -571,6 +571,12 @@ const clickHandler = (graphContext, control, config, canvasSVG) => (
     canvasSVG
         .selectAll(`.${styles.pairedPoint}[aria-describedby="${item.key}"]`)
         .attr("aria-hidden", legendSelected);
+    /*
+    Select only those .carbon-data-pair elements that belong to the particular canvas for which a paired result legend item was clicked
+    and  pass them to showLine() method.
+    This ensures that when there are multiple canvases with paired results in each canvas,
+    selecting a paired result legend item in one canvas does not affect paired results in other canvases.
+    */
     const pairedBoxGroupClipPath = `url(#${config.clipPathId})`;
     const pairedBoxGroup = d3.selectAll(`.${styles.pairedBoxGroup}`);
     pairedBoxGroup.each(function () {
