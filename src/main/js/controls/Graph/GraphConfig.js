@@ -113,6 +113,10 @@ export const processInput = (input, config, type) => {
         false
     );
     config.legendPadding = getLegendPadding(config, input.legendPadding);
+    config.suppressTrailingZeros = getDefaultValue(
+        input.suppressTrailingZeros,
+        false
+    );
 
     // Additional X Axis properties defined on top of input axis
     config.axis.x.type = getDefaultValue(_axis.x.type, AXIS_TYPE.DEFAULT);

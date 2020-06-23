@@ -409,6 +409,47 @@ describe("Graph - Axes", () => {
             const rangeY2 = 250;
             expect(getAverageTicksCount(rangeY, rangeY2)).toEqual(5);
         });
+        it("Suppresses tick values's trailing zeros when default d3 tick formatting is used and suppressTrailingZeros is set to true", () => {
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.y = {
+                label: "Some Y Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        suppressTrailingZeros: true,
+                        ticksCount: 3
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allYAxisElements = document.querySelectorAll(
+                `.${styles.axisY}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allYAxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0");
+            expect(
+                allYAxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("2");
+            expect(
+                allYAxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allYAxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1");
+            expect(
+                allYAxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+        });
     });
 
     describe("when Y-2 axis is present", () => {

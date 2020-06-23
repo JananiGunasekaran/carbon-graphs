@@ -476,6 +476,98 @@ const DATA = [
         })
     },
     {
+        LINE_DECIMAL_AXES_VALUES: (id) => ({
+            bindTo: id,
+            axis: {
+                x: {
+                    type: Carbon.helpers.AXIS_TYPE.TIME_SERIES,
+                    label: "Datetime",
+                    lowerLimit: new Date(2016, 0, 1, 1, 0).toISOString(),
+                    upperLimit: new Date(2016, 0, 1, 23, 59).toISOString()
+                },
+                y: {
+                    label: "Line Set A",
+                    lowerLimit: 0.2,
+                    upperLimit: 3.8
+                }
+            },
+            data: [
+                {
+                    key: "uid_1",
+                    label: {
+                        display: "Data Label 1"
+                    },
+                    shape: Carbon.helpers.SHAPES.DARK.CIRCLE,
+                    onClick: loadPopup,
+                    values: [
+                        {
+                            x: new Date(2016, 0, 1, 1, 5).toISOString(),
+                            y: 0.2
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 2, 15).toISOString(),
+                            y: 0.4
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 3, 15).toISOString(),
+                            y: 0.6
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 4, 15).toISOString(),
+                            y: 0.6
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 5, 15).toISOString(),
+                            y: 0.8
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 6, 15).toISOString(),
+                            y: 1.4
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 7, 0).toISOString(),
+                            y: 1.6
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 8, 15).toISOString(),
+                            y: 1.8
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 9, 45).toISOString(),
+                            y: 1.4
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 12, 15).toISOString(),
+                            y: 1.4
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 13, 15).toISOString(),
+                            y: 3.6
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 14, 15).toISOString(),
+                            y: 1.2
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 19, 45).toISOString(),
+                            y: 1.4
+                        },
+                        {
+                            x: new Date(2016, 0, 1, 21, 15).toISOString(),
+                            y: 1.6
+                        }
+                    ],
+                    yAxis: "y"
+                }
+            ],
+            showLabel: true,
+            showLegend: true,
+            showShapes: true,
+            showVGrid: true,
+            showHGrid: true
+        })
+    },
+    {
         PAIRED_DEFAULT: (id) => ({
             bindTo: id,
             axis: {

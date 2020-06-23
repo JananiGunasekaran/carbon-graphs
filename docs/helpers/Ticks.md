@@ -24,10 +24,10 @@ If there is only 1 axis in the graph, the tick intervals are calculated automati
 
 #### Required
 
-| Property Name | Expected | Description                                                                                                                                       |
-| ------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| values        | array    | Ticks values in the axis. Each tick will have an associated grid line. If they are not provided, optional tick values need to exist.              |
-| format        | string   | [Formatter](https://github.com/d3/d3-time-format/blob/master/README.md#locales) for tick values. `Note:` This is mandatory if values are provided |
+| Property Name | Expected | Description                                                                                                                                                                                                                                              |
+| ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| values        | array    | Ticks values in the axis. Each tick will have an associated grid line. If they are not provided, optional tick values need to exist.                                                                                                                     |
+| format        | string   | [Formatter](https://github.com/d3/d3-time-format/blob/master/README.md#locales) for tick values. `Note:` This is mandatory if values are provided. To suppress tick values's trailing zeros, specify '~' just before the format type. `Eg: format: "~r"` |
 
 #### Optional
 
