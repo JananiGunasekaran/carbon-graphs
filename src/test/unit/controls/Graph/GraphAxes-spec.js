@@ -409,47 +409,6 @@ describe("Graph - Axes", () => {
             const rangeY2 = 250;
             expect(getAverageTicksCount(rangeY, rangeY2)).toEqual(5);
         });
-        it("Suppresses tick values's trailing zeros when default d3 tick formatting is used and suppressTrailingZeros is set to true", () => {
-            const localeAxisObj = utils.deepClone(axisDefault);
-            localeAxisObj.y = {
-                label: "Some Y Label",
-                lowerLimit: 0.0,
-                upperLimit: 2.0
-            };
-            graph = new Graph(
-                Object.assign(
-                    {
-                        suppressTrailingZeros: true,
-                        ticksCount: 3
-                    },
-                    getAxes(localeAxisObj)
-                )
-            );
-            const allYAxisElements = document.querySelectorAll(
-                `.${styles.axisY}`
-            );
-            // The first child element is the domain itself, and second child onwards denote the ticks
-            expect(
-                allYAxisElements[0].childNodes[1].querySelector("text")
-                    .textContent
-            ).toBe("0");
-            expect(
-                allYAxisElements[0].childNodes[2].querySelector("text")
-                    .textContent
-            ).toBe("2");
-            expect(
-                allYAxisElements[0].childNodes[3].querySelector("text")
-                    .textContent
-            ).toBe("0.5");
-            expect(
-                allYAxisElements[0].childNodes[4].querySelector("text")
-                    .textContent
-            ).toBe("1");
-            expect(
-                allYAxisElements[0].childNodes[5].querySelector("text")
-                    .textContent
-            ).toBe("1.5");
-        });
     });
 
     describe("when Y-2 axis is present", () => {
@@ -967,6 +926,558 @@ describe("Graph - Axes", () => {
             xAxisTickTexts.forEach((textElement) => {
                 expect(textElement.innerHTML).toBe("");
             });
+        });
+    });
+    describe("When default d3 tick formatting for x axis is used and suppressTrailingZeros is set to true", () => {
+        it("should suppress x axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.x = {
+                label: "Some X Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        suppressTrailingZeros: true,
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allXAxisElements = document.querySelectorAll(
+                `.${styles.axisX}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allXAxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0");
+            expect(
+                allXAxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allXAxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("1");
+            expect(
+                allXAxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+            expect(
+                allXAxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("2");
+        });
+    });
+    describe("When default d3 tick formatting is used for x axis and suppressTrailingZeros is set to false", () => {
+        it("should not suppress x axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.x = {
+                label: "Some X Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        suppressTrailingZeros: false,
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allXAxisElements = document.querySelectorAll(
+                `.${styles.axisX}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allXAxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0.0");
+            expect(
+                allXAxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allXAxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("1.0");
+            expect(
+                allXAxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+            expect(
+                allXAxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("2.0");
+        });
+    });
+    describe("When default d3 tick formatting is not used for x axis and consumer specifies '~' in tick format", () => {
+        it("should suppress x axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.x = {
+                label: "Some X Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0,
+                ticks: {
+                    format: ".1~f"
+                }
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allXAxisElements = document.querySelectorAll(
+                `.${styles.axisX}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allXAxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0");
+            expect(
+                allXAxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allXAxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("1");
+            expect(
+                allXAxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+            expect(
+                allXAxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("2");
+        });
+    });
+    describe("When default d3 tick formatting is not used for x axis and consumer does not specify '~' in tick format", () => {
+        it("should not suppress x axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.x = {
+                label: "Some X Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0,
+                ticks: {
+                    format: ".1f"
+                }
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allXAxisElements = document.querySelectorAll(
+                `.${styles.axisX}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allXAxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0.0");
+            expect(
+                allXAxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allXAxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("1.0");
+            expect(
+                allXAxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+            expect(
+                allXAxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("2.0");
+        });
+    });
+    describe("When default d3 tick formatting for y axis is used and suppressTrailingZeros is set to true", () => {
+        it("should suppress y axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.y = {
+                label: "Some Y Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        suppressTrailingZeros: true,
+                        ticksCount: 3,
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allYAxisElements = document.querySelectorAll(
+                `.${styles.axisY}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allYAxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0");
+            expect(
+                allYAxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("2");
+            expect(
+                allYAxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allYAxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1");
+            expect(
+                allYAxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+        });
+    });
+    describe("When default d3 tick formatting is used for y axis and suppressTrailingZeros is set to false", () => {
+        it("should not suppress y axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.y = {
+                label: "Some Y Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        suppressTrailingZeros: false,
+                        ticksCount: 3,
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allYAxisElements = document.querySelectorAll(
+                `.${styles.axisY}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allYAxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0.0");
+            expect(
+                allYAxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("2.0");
+            expect(
+                allYAxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allYAxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1.0");
+            expect(
+                allYAxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+        });
+    });
+    describe("When default d3 tick formatting is not used for y axis and consumer specifies '~' in tick format", () => {
+        it("should suppress y axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.y = {
+                label: "Some Y Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0,
+                ticks: {
+                    format: ".1~f"
+                }
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        ticksCount: 3,
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allYAxisElements = document.querySelectorAll(
+                `.${styles.axisY}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allYAxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0");
+            expect(
+                allYAxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("2");
+            expect(
+                allYAxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allYAxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1");
+            expect(
+                allYAxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+        });
+    });
+    describe("When default d3 tick formatting is not used for y axis and consumer does not specify '~' in tick format", () => {
+        it("should not suppress y axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.y = {
+                label: "Some Y Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0,
+                ticks: {
+                    format: ".1f"
+                }
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        ticksCount: 3,
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allYAxisElements = document.querySelectorAll(
+                `.${styles.axisY}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allYAxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0.0");
+            expect(
+                allYAxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("2.0");
+            expect(
+                allYAxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allYAxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1.0");
+            expect(
+                allYAxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+        });
+    });
+    describe("When default d3 tick formatting for y2 axis is used and suppressTrailingZeros is set to true", () => {
+        it("should suppress y2 axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.y2 = {
+                show: true,
+                label: "Some Y2 Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        suppressTrailingZeros: true,
+                        ticksCount: 3,
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allY2AxisElements = document.querySelectorAll(
+                `.${styles.axisY2}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allY2AxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0");
+            expect(
+                allY2AxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("2");
+            expect(
+                allY2AxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allY2AxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1");
+            expect(
+                allY2AxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+        });
+    });
+    describe("When default d3 tick formatting is used for y2 axis and suppressTrailingZeros is set to false", () => {
+        it("should not suppress y2 axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.y2 = {
+                show: true,
+                label: "Some Y2 Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        suppressTrailingZeros: false,
+                        ticksCount: 3,
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allY2AxisElements = document.querySelectorAll(
+                `.${styles.axisY2}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allY2AxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0.0");
+            expect(
+                allY2AxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("2.0");
+            expect(
+                allY2AxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allY2AxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1.0");
+            expect(
+                allY2AxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+        });
+    });
+    describe("When default d3 tick formatting is not used for y2 axis and consumer specifies '~' in tick format", () => {
+        it("should suppress y2 axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.y2 = {
+                show: true,
+                label: "Some Y2 Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0,
+                ticks: {
+                    format: ".1~f"
+                }
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        ticksCount: 3,
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allY2AxisElements = document.querySelectorAll(
+                `.${styles.axisY2}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allY2AxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0");
+            expect(
+                allY2AxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("2");
+            expect(
+                allY2AxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allY2AxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1");
+            expect(
+                allY2AxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
+        });
+    });
+    describe("When default d3 tick formatting is not used for y2 axis and consumer does not specify '~' in tick format", () => {
+        it("should not suppress y2 axis tick values's trailing zeros", () => {
+            graph.destroy();
+            const localeAxisObj = utils.deepClone(axisDefault);
+            localeAxisObj.y2 = {
+                show: true,
+                label: "Some Y2 Label",
+                lowerLimit: 0.0,
+                upperLimit: 2.0,
+                ticks: {
+                    format: ".1f"
+                }
+            };
+            graph = new Graph(
+                Object.assign(
+                    {
+                        ticksCount: 3,
+                        allowCalibration: false
+                    },
+                    getAxes(localeAxisObj)
+                )
+            );
+            const allY2AxisElements = document.querySelectorAll(
+                `.${styles.axisY2}`
+            );
+            // The first child element is the domain itself, and second child onwards denote the ticks
+            expect(
+                allY2AxisElements[0].childNodes[1].querySelector("text")
+                    .textContent
+            ).toBe("0.0");
+            expect(
+                allY2AxisElements[0].childNodes[2].querySelector("text")
+                    .textContent
+            ).toBe("2.0");
+            expect(
+                allY2AxisElements[0].childNodes[3].querySelector("text")
+                    .textContent
+            ).toBe("0.5");
+            expect(
+                allY2AxisElements[0].childNodes[4].querySelector("text")
+                    .textContent
+            ).toBe("1.0");
+            expect(
+                allY2AxisElements[0].childNodes[5].querySelector("text")
+                    .textContent
+            ).toBe("1.5");
         });
     });
 });
