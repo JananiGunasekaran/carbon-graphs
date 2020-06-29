@@ -183,6 +183,11 @@ const createAxisReferenceLine = (axis, scale, config, canvasSVG) => {
 const getAxesScale = (axis, scale, config) => {
     let tickFormatToTrimTrailingZeros;
 
+    // If suppressTrailingZeros is set to true and x axis type is set as
+    // DEFAULT (normal number based axes values) and x axis's tick format
+    // is not provided by the consumer, then invoke tickFormatter()
+    // to insert '~' just before the default d3 tick format type
+    // to suppress ticks values's trailing zeros
     if (
         config.suppressTrailingZeros &&
         config.axis.x.type === AXIS_TYPE.DEFAULT &&
