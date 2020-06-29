@@ -237,6 +237,10 @@ const getAxesScale = (axis, scale, config) => {
                 )
             );
 
+            // If suppressTrailingZeros is set to true and y2 axis's tick format
+            // is not provided by the consumer, then invoke tickFormatter()
+            // to insert '~' just before the default d3 tick format type
+            // to suppress ticks values's trailing zeros
             if (
                 config.suppressTrailingZeros &&
                 utils.isUndefined(config.axis.y2.ticks.format)
