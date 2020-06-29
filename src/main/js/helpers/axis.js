@@ -468,6 +468,10 @@ const getAxesScale = (axis, scale, config) => {
  */
 const tickFormatter = (axis) => {
     const defaultTickFormat = axis.scale().tickFormat().toString();
+
+    // Return the default d3 tick format with the '~' character inserted just before the format type
+    // Eg: defaultTickFormat: .1f
+    // Value returned below will be: .1~f
     return `${defaultTickFormat.slice(
         0,
         defaultTickFormat.length - 1
