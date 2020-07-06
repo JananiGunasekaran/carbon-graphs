@@ -935,7 +935,10 @@ describe("Graph - Axes", () => {
             localeAxisObj.x = {
                 label: "Some X Label",
                 lowerLimit: 0.0,
-                upperLimit: 2.0
+                upperLimit: 2.0,
+                ticks: {
+                    values: [0.0, 0.5, 1.0, 1.5, 2.0]
+                }
             };
             graph = new Graph(
                 Object.assign(
@@ -979,7 +982,10 @@ describe("Graph - Axes", () => {
             localeAxisObj.x = {
                 label: "Some X Label",
                 lowerLimit: 0.0,
-                upperLimit: 2.0
+                upperLimit: 2.0,
+                ticks: {
+                    values: [0.0, 0.5, 1.0, 1.5, 2.0]
+                }
             };
             graph = new Graph(
                 Object.assign(
@@ -1025,6 +1031,7 @@ describe("Graph - Axes", () => {
                 lowerLimit: 0.0,
                 upperLimit: 2.0,
                 ticks: {
+                    values: [0.0, 0.5, 1.0, 1.5, 2.0],
                     format: ".1~f"
                 }
             };
@@ -1071,6 +1078,7 @@ describe("Graph - Axes", () => {
                 lowerLimit: 0.0,
                 upperLimit: 2.0,
                 ticks: {
+                    values: [0.0, 0.5, 1.0, 1.5, 2.0],
                     format: ".1f"
                 }
             };
