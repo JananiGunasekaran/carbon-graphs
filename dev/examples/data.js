@@ -480,15 +480,20 @@ const DATA = [
             bindTo: id,
             axis: {
                 x: {
-                    type: Carbon.helpers.AXIS_TYPE.TIME_SERIES,
-                    label: "Datetime",
-                    lowerLimit: new Date(2016, 0, 1, 1, 0).toISOString(),
-                    upperLimit: new Date(2016, 0, 1, 23, 59).toISOString()
+                    label: "Data",
+                    lowerLimit: 20.7,
+                    upperLimit: 22.7
                 },
                 y: {
                     label: "Line Set A",
                     lowerLimit: 0.2,
                     upperLimit: 3.8
+                },
+                y2: {
+                    show: true,
+                    label: "Line Set B",
+                    lowerLimit: 10.2,
+                    upperLimit: 13.8
                 }
             },
             data: [
@@ -501,70 +506,107 @@ const DATA = [
                     onClick: loadPopup,
                     values: [
                         {
-                            x: new Date(2016, 0, 1, 1, 5).toISOString(),
+                            x: 20.9,
                             y: 0.2
                         },
                         {
-                            x: new Date(2016, 0, 1, 2, 15).toISOString(),
+                            x: 21,
                             y: 0.4
                         },
                         {
-                            x: new Date(2016, 0, 1, 3, 15).toISOString(),
+                            x: 21.1,
                             y: 0.6
                         },
                         {
-                            x: new Date(2016, 0, 1, 4, 15).toISOString(),
+                            x: 21.2,
                             y: 0.6
                         },
                         {
-                            x: new Date(2016, 0, 1, 5, 15).toISOString(),
+                            x: 21.4,
                             y: 0.8
                         },
                         {
-                            x: new Date(2016, 0, 1, 6, 15).toISOString(),
+                            x: 21.5,
                             y: 1.4
                         },
                         {
-                            x: new Date(2016, 0, 1, 7, 0).toISOString(),
+                            x: 21.8,
                             y: 1.6
                         },
                         {
-                            x: new Date(2016, 0, 1, 8, 15).toISOString(),
+                            x: 22,
                             y: 1.8
                         },
                         {
-                            x: new Date(2016, 0, 1, 9, 45).toISOString(),
+                            x: 22.1,
                             y: 1.4
                         },
                         {
-                            x: new Date(2016, 0, 1, 12, 15).toISOString(),
+                            x: 22.2,
                             y: 1.4
                         },
                         {
-                            x: new Date(2016, 0, 1, 13, 15).toISOString(),
+                            x: 22.3,
                             y: 3.6
                         },
                         {
-                            x: new Date(2016, 0, 1, 14, 15).toISOString(),
+                            x: 22.4,
                             y: 1.2
                         },
                         {
-                            x: new Date(2016, 0, 1, 19, 45).toISOString(),
+                            x: 22.5,
                             y: 1.4
                         },
                         {
-                            x: new Date(2016, 0, 1, 21, 15).toISOString(),
+                            x: 22.6,
                             y: 1.6
                         }
                     ],
                     yAxis: "y"
+                },
+                {
+                    key: "uid_2",
+                    label: {
+                        display: "Data Label 2"
+                    },
+                    shape: Carbon.helpers.SHAPES.DARK.RHOMBUS,
+                    color: Carbon.helpers.COLORS.BLUE,
+                    onClick: loadPopup,
+                    values: [
+                        {
+                            x: 20.9,
+                            y: 10.4
+                        },
+                        {
+                            x: 21.2,
+                            y: 11
+                        },
+                        {
+                            x: 21.4,
+                            y: 12
+                        },
+                        {
+                            x: 21.6,
+                            y: 12
+                        },
+                        {
+                            x: 21.8,
+                            y: 12.5
+                        },
+                        {
+                            x: 22.2,
+                            y: 13
+                        }
+                    ],
+                    yAxis: "y2"
                 }
             ],
             showLabel: true,
             showLegend: true,
             showShapes: true,
             showVGrid: true,
-            showHGrid: true
+            showHGrid: true,
+            ticksCount: 7
         })
     },
     {

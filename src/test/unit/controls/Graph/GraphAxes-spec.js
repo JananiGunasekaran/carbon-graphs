@@ -928,7 +928,7 @@ describe("Graph - Axes", () => {
             });
         });
     });
-    describe("When default d3 tick formatting for x axis is used and suppressTrailingZeros is set to true", () => {
+    describe("When default d3 tick formatting for x axis is used and suppressTrailingZeros for x axis is set to true", () => {
         it("should suppress x axis tick values's trailing zeros", () => {
             graph.destroy();
             const localeAxisObj = utils.deepClone(axisDefault);
@@ -936,6 +936,7 @@ describe("Graph - Axes", () => {
                 label: "Some X Label",
                 lowerLimit: 0.0,
                 upperLimit: 2.0,
+                suppressTrailingZeros: true,
                 ticks: {
                     values: [0.0, 0.5, 1.0, 1.5, 2.0]
                 }
@@ -943,7 +944,6 @@ describe("Graph - Axes", () => {
             graph = new Graph(
                 Object.assign(
                     {
-                        suppressTrailingZeros: true,
                         allowCalibration: false
                     },
                     getAxes(localeAxisObj)
@@ -975,7 +975,7 @@ describe("Graph - Axes", () => {
             ).toBe("2");
         });
     });
-    describe("When default d3 tick formatting is used for x axis and suppressTrailingZeros is set to false", () => {
+    describe("When default d3 tick formatting is used for x axis and suppressTrailingZeros for x axis is set to false", () => {
         it("should not suppress x axis tick values's trailing zeros", () => {
             graph.destroy();
             const localeAxisObj = utils.deepClone(axisDefault);
@@ -983,6 +983,7 @@ describe("Graph - Axes", () => {
                 label: "Some X Label",
                 lowerLimit: 0.0,
                 upperLimit: 2.0,
+                suppressTrailingZeros: false,
                 ticks: {
                     values: [0.0, 0.5, 1.0, 1.5, 2.0]
                 }
@@ -990,7 +991,6 @@ describe("Graph - Axes", () => {
             graph = new Graph(
                 Object.assign(
                     {
-                        suppressTrailingZeros: false,
                         allowCalibration: false
                     },
                     getAxes(localeAxisObj)
@@ -1116,19 +1116,19 @@ describe("Graph - Axes", () => {
             ).toBe("2.0");
         });
     });
-    describe("When default d3 tick formatting for y axis is used and suppressTrailingZeros is set to true", () => {
+    describe("When default d3 tick formatting for y axis is used and suppressTrailingZeros for y axis is set to true", () => {
         it("should suppress y axis tick values's trailing zeros", () => {
             graph.destroy();
             const localeAxisObj = utils.deepClone(axisDefault);
             localeAxisObj.y = {
                 label: "Some Y Label",
                 lowerLimit: 0.0,
-                upperLimit: 2.0
+                upperLimit: 2.0,
+                suppressTrailingZeros: true
             };
             graph = new Graph(
                 Object.assign(
                     {
-                        suppressTrailingZeros: true,
                         ticksCount: 3,
                         allowCalibration: false
                     },
@@ -1161,19 +1161,19 @@ describe("Graph - Axes", () => {
             ).toBe("1.5");
         });
     });
-    describe("When default d3 tick formatting is used for y axis and suppressTrailingZeros is set to false", () => {
+    describe("When default d3 tick formatting is used for y axis and suppressTrailingZeros for y axis is set to false", () => {
         it("should not suppress y axis tick values's trailing zeros", () => {
             graph.destroy();
             const localeAxisObj = utils.deepClone(axisDefault);
             localeAxisObj.y = {
                 label: "Some Y Label",
                 lowerLimit: 0.0,
-                upperLimit: 2.0
+                upperLimit: 2.0,
+                suppressTrailingZeros: false
             };
             graph = new Graph(
                 Object.assign(
                     {
-                        suppressTrailingZeros: false,
                         ticksCount: 3,
                         allowCalibration: false
                     },
@@ -1300,7 +1300,7 @@ describe("Graph - Axes", () => {
             ).toBe("1.5");
         });
     });
-    describe("When default d3 tick formatting for y2 axis is used and suppressTrailingZeros is set to true", () => {
+    describe("When default d3 tick formatting for y2 axis is used and suppressTrailingZeros for y2 is set to true", () => {
         it("should suppress y2 axis tick values's trailing zeros", () => {
             graph.destroy();
             const localeAxisObj = utils.deepClone(axisDefault);
@@ -1308,12 +1308,12 @@ describe("Graph - Axes", () => {
                 show: true,
                 label: "Some Y2 Label",
                 lowerLimit: 0.0,
-                upperLimit: 2.0
+                upperLimit: 2.0,
+                suppressTrailingZeros: true
             };
             graph = new Graph(
                 Object.assign(
                     {
-                        suppressTrailingZeros: true,
                         ticksCount: 3,
                         allowCalibration: false
                     },
@@ -1346,7 +1346,7 @@ describe("Graph - Axes", () => {
             ).toBe("1.5");
         });
     });
-    describe("When default d3 tick formatting is used for y2 axis and suppressTrailingZeros is set to false", () => {
+    describe("When default d3 tick formatting is used for y2 axis and suppressTrailingZeros for y2 is set to false", () => {
         it("should not suppress y2 axis tick values's trailing zeros", () => {
             graph.destroy();
             const localeAxisObj = utils.deepClone(axisDefault);
@@ -1354,12 +1354,12 @@ describe("Graph - Axes", () => {
                 show: true,
                 label: "Some Y2 Label",
                 lowerLimit: 0.0,
-                upperLimit: 2.0
+                upperLimit: 2.0,
+                suppressTrailingZeros: false
             };
             graph = new Graph(
                 Object.assign(
                     {
-                        suppressTrailingZeros: false,
                         ticksCount: 3,
                         allowCalibration: false
                     },

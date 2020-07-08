@@ -189,7 +189,7 @@ const getAxesScale = (axis, scale, config) => {
     // to insert '~' just before the default d3 tick format type
     // to suppress ticks values's trailing zeros
     if (
-        config.suppressTrailingZeros &&
+        config.axis.x.suppressTrailingZeros &&
         config.axis.x.type === AXIS_TYPE.DEFAULT &&
         utils.isUndefined(config.axis.x.ticks.format)
     ) {
@@ -213,6 +213,13 @@ const getAxesScale = (axis, scale, config) => {
         config.axis.x.orientation
     );
 
+    // Reset the tickFormatToTrimTrailingZeros to null, so that
+    // if the y axis suppressTrailingZeros is set to false and
+    // consumer has not defined its tick format,
+    // we can ensure we are not using the same x axis's tick format
+    // for y axis as well
+    tickFormatToTrimTrailingZeros = null;
+
     axis.axisInfoRow.x = prepareXAxisInfoRow(
         scale.x,
         getAxisInfoOrientation(config.axis.x.orientation)
@@ -229,7 +236,7 @@ const getAxesScale = (axis, scale, config) => {
             // to insert '~' just before the default d3 tick format type
             // to suppress ticks values's trailing zeros
             if (
-                config.suppressTrailingZeros &&
+                config.axis.y.suppressTrailingZeros &&
                 utils.isUndefined(config.axis.y.ticks.format)
             ) {
                 axis.y = d3.axisLeft(scale.y);
@@ -247,12 +254,19 @@ const getAxesScale = (axis, scale, config) => {
                 )
             );
 
+            // Reset the tickFormatToTrimTrailingZeros to null, so that
+            // if the y2 axis suppressTrailingZeros is set to false and
+            // consumer has not defined its tick format,
+            // we can ensure we are not using the same y axis's tick format
+            // for y2 axis as well
+            tickFormatToTrimTrailingZeros = null;
+
             // If suppressTrailingZeros is set to true and y2 axis's tick format
             // is not provided by the consumer, then invoke tickFormatter()
             // to insert '~' just before the default d3 tick format type
             // to suppress ticks values's trailing zeros
             if (
-                config.suppressTrailingZeros &&
+                config.axis.y2.suppressTrailingZeros &&
                 utils.isUndefined(config.axis.y2.ticks.format)
             ) {
                 axis.y2 = d3.axisRight(scale.y2);
@@ -291,7 +305,7 @@ const getAxesScale = (axis, scale, config) => {
             );
 
             if (
-                config.suppressTrailingZeros &&
+                config.axis.y.suppressTrailingZeros &&
                 utils.isUndefined(config.axis.y.ticks.format)
             ) {
                 axis.y = d3.axisLeft(scale.y);
@@ -308,9 +322,10 @@ const getAxesScale = (axis, scale, config) => {
                         : tickFormatToTrimTrailingZeros
                 )
             );
+            tickFormatToTrimTrailingZeros = null;
 
             if (
-                config.suppressTrailingZeros &&
+                config.axis.y2.suppressTrailingZeros &&
                 utils.isUndefined(config.axis.y2.ticks.format)
             ) {
                 axis.y2 = d3.axisRight(scale.y2);
@@ -353,7 +368,7 @@ const getAxesScale = (axis, scale, config) => {
             );
 
             if (
-                config.suppressTrailingZeros &&
+                config.axis.y.suppressTrailingZeros &&
                 utils.isUndefined(config.axis.y.ticks.format)
             ) {
                 axis.y = d3.axisLeft(scale.y);
@@ -370,9 +385,10 @@ const getAxesScale = (axis, scale, config) => {
                         : tickFormatToTrimTrailingZeros
                 )
             );
+            tickFormatToTrimTrailingZeros = null;
 
             if (
-                config.suppressTrailingZeros &&
+                config.axis.y2.suppressTrailingZeros &&
                 utils.isUndefined(config.axis.y2.ticks.format)
             ) {
                 axis.y2 = d3.axisRight(scale.y2);
@@ -396,7 +412,7 @@ const getAxesScale = (axis, scale, config) => {
         // Single Y axis - custom tick values
         if (utils.isDefined(config.axis.y.ticks.values)) {
             if (
-                config.suppressTrailingZeros &&
+                config.axis.y.suppressTrailingZeros &&
                 utils.isUndefined(config.axis.y.ticks.format)
             ) {
                 axis.y = d3.axisLeft(scale.y);
@@ -428,7 +444,7 @@ const getAxesScale = (axis, scale, config) => {
             );
 
             if (
-                config.suppressTrailingZeros &&
+                config.axis.y.suppressTrailingZeros &&
                 utils.isUndefined(config.axis.y.ticks.format)
             ) {
                 axis.y = d3.axisLeft(scale.y);
@@ -451,7 +467,7 @@ const getAxesScale = (axis, scale, config) => {
         // are not defined
         else {
             if (
-                config.suppressTrailingZeros &&
+                config.axis.y.suppressTrailingZeros &&
                 utils.isUndefined(config.axis.y.ticks.format)
             ) {
                 axis.y = d3.axisLeft(scale.y);
