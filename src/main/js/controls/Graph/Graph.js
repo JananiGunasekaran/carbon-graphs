@@ -72,7 +72,7 @@ const setCanvasWidth = (container, config) => {
  * @returns {undefined} - returns nothing
  */
 const setCanvasHeight = (config) => {
-    // Increase canvas height only when either the x-axis label is specified
+    // Increase the canvas height only when either the x-axis label is specified
     // and showLabel is set to true or x-axis show is set to true
     if ((config.showLabel && !!config.axis.x.label) || config.axis.x.show) {
         config.canvasHeight =
